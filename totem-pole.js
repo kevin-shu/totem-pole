@@ -9,7 +9,6 @@ TP = (function(){
 	var that = function(id, initData){
 		this.view = document.getElementById(id).cloneNode(true);
 		this.view.id='';
-		// var viewModel = {};
 		this.data = parseDom.call(this.view,{});
 		this.setData = setData;
 		this.getView = function(){return this.view;};
