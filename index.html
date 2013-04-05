@@ -7,7 +7,6 @@
     <meta name="description" content="Totem-pole : A light MVVM frame work of javascript." />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
     <title>Totem-pole</title>
   </head>
 
@@ -31,32 +30,51 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+        <h3>Welcome to Totem-Pole.js</h3>
+        <p>Totem-Pole.js is a lightweight MVVM-framework and independent from other libaries.</p>
+        <p>It's easy to use, please give it a try. And you're welcome to make a feedback! :)</p>
+        <br>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+        <h3>First with template</h3>
+        <p>First we set a template:</p>
+        <pre><code>
+            &lt;div id=&quot;person-template&quot;&gt;
+                &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">photo</strong>:<strong style="color:blue">html</strong>&quot;&gt;&lt;/div&gt;
+                Name: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">name</strong>:<strong style="color:blue">text</strong>, <strong style="color:green">name-color</strong>:<strong style="color:blue">style</strong>&quot;&gt;&lt;/div&gt;
+                Age: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">age</strong>:<strong style="color:blue">text</strong>&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        </code></pre>
+        <p>As you see, we can bind the view's "html", "text", and "style". And also "click" could be binded, it will show's up at the "TODO list" demo page.</p>
+        <br>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+        <h3>And then the ViewModel...</h3>
+        <pre><code>
+        var person = new TP("person-template",{
+                                name: "Kevin",
+                                name-color: {color:"blue"}
+                                age: 23,
+                                photo: "&lt;img src='/img/me.jpg' /&gt;"
+                            });
+        </code></pre>
+        <br>
+        <p>Sure we can set the data later:</p>
+        <pre><code>
+        var person = new TP("person-template");
+        person.setData({
+            name: "Kevin",
+            name-color: {color:"blue"}
+            age: 23,
+            photo: "&lt;img src='/img/me.jpg' /&gt;"
+        });
+        </code></pre>
+        <br>
+        <p>And we can get the view like this:</p>
+        <pre><code>
+        document.body.appendChild(person.view);
+        </code></pre>
+        <br>
+        <p>Isn't that easy?</p>
+        <p>Try the <a href="./todo.html">TODO list</a></p>
       </section>
     </div>
 
@@ -67,7 +85,6 @@ $ git checkout gh-pages
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-
     
 
   </body>

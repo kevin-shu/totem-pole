@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Totem-pole.js :: TODO list</title>
+	<script src="./javascripts/totem-pole.js" ></script>
+	<style >
+		.check-box{
+			border-style: inset;
+			border-width: 4px;
+			border-color: grey;
+			float:right;
+			width:20px;
+			height:20px;
+			cursor:pointer;
+		}
+		.list{
+			margin: 10px;
+			padding: 10px;
+			height:28px;
+			font-size: x-large;
+			border:5px solid grey;
+			-webkit-border-radius: 8px;
+			-moz-border-radius: 8px;
+			border-radius: 8px;
+			-webkit-box-shadow: 3px 3px 6px rgba(50, 50, 50, 0.75);
+			-moz-box-shadow:    3px 3px 6px rgba(50, 50, 50, 0.75);
+			box-shadow:         3px 3px 6px rgba(50, 50, 50, 0.75);
+		}
+		#todo-container{
+			width:400px;
+		}
+		#input-todo{
+			width:300px;
+			height:32px;
+			font-size: large;
+		}
+		#send-todo{
+			height:36px;
+			font-size: large;
+		}
+		pre{
+			background: #eee;
+			padding:20px;
+			overflow:auto;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="container" align="center" style="width:600px; margin:20px auto">
+		<h1>TODO list</h1>
+		<div id="todo-container"></div>
+		<div style="width:400px">
+			<input id="input-todo" placeholder="type something here..."/>
+			<button id="send-todo">send</button>
+		</div>
+		<div class="inpect-block" align="left">
+			<h3>Template:</h3>
+			<pre>
+&lt;div id=&quot;event-template&quot; class=&quot;list&quot;&gt;
+	&lt;span data-tp=&quot;event:text&quot;&gt;&lt;/span&gt;
+	&lt;div class=&quot;check-box&quot; data-tp=&quot;check:click&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+			</pre>
+
+			<h3>Code:</h3>
+			<pre>
+document.getElementById("send-todo").onclick=function(){
+	var event = document.getElementById("input-todo").value;
+	var check = function(){
+		console.log(this.parentElement);
+		if (this.innerText=="X"){
+			this.innerText="";
+		} else{
+			this.innerText="X";
+		}
+	};
+	var todo = new TP("event-template",{event:event,check:check});
+	document.getElementById("todo-container").appendChild(todo.getView());
+};
+			</pre>
+		</div>
+	</div>
+
+	<div id="template-bucket" style="display:none">
+		<div id="event-template" class="list">
+			<span data-tp="event:text"></span>
+			<div class="check-box" data-tp="check:click"></div>
+		</div>
+	</div>
+	<script>
+		document.getElementById("send-todo").onclick=function(){
+			var event = document.getElementById("input-todo").value;
+			var check = function(){
+				console.log(this.parentElement);
+				if (this.innerText=="X"){
+					this.innerText="";
+				} else{
+					this.innerText="X";
+				}
+			};
+			var todo = new TP("event-template",{event:event,check:check});
+			document.getElementById("todo-container").appendChild(todo.getView());
+		};
+	</script>
+</body>
+</html>
