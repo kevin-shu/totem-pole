@@ -93,9 +93,9 @@ document.getElementById("send-todo").onclick=function(){
 	</div>
 
 	<div id="template-bucket" style="display:none">
-		<div id="event-template" class="list">
-			<span data-tp="event:text"></span>
-			<div class="check-box" data-tp="check:click"></div>
+		<div id="event-template" class="list"  data-tp="mouseover:onmouseover, mouseout:onmouseout">
+			<span data-tp="event"></span>
+			<div class="check-box" data-tp="check:onclick"></div>
 		</div>
 	</div>
 	<script>

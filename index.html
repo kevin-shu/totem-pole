@@ -35,37 +35,40 @@
         <p>It's easy to use, please give it a try. And you're welcome to make a feedback! :)</p>
         <br>
 
-        <h3>First with template</h3>
+        <h3>Start with view's template</h3>
         <p>First we set a template:</p>
         <pre><code>
-            &lt;div id=&quot;person-template&quot;&gt;
-                &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">photo</strong>:<strong style="color:blue">html</strong>&quot;&gt;&lt;/div&gt;
-                Name: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">name</strong>:<strong style="color:blue">text</strong>, <strong style="color:green">name-color</strong>:<strong style="color:blue">style</strong>&quot;&gt;&lt;/div&gt;
-                Age: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">age</strong>:<strong style="color:blue">text</strong>&quot;&gt;&lt;/div&gt;
-            &lt;/div&gt;
+    &lt;div id=&quot;person-template&quot;&gt;
+        &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">photo</strong>:<strong style="color:blue">html</strong>&quot;&gt;&lt;/div&gt;
+        Name: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">name</strong>:<strong style="color:blue">text</strong>, <strong style="color:green">name-color</strong>:<strong style="color:blue">style</strong>&quot;&gt;&lt;/div&gt;
+        Age: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">age</strong>:<strong style="color:blue">text</strong>&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
         </code></pre>
-        <p>As you see, we can bind the view's "html", "text", and "style". And also "click" could be binded, it will show's up at the "TODO list" demo page.</p>
+        <p>As you see, we can bind the view's "html", "text", and "style". And also "onclick", "onmouseover"... you could watch the supported event <a href="https://github.com/kevin-shu/totem-pole/wiki/Events-binding">here</a>.</p>
+        <p><strong>Since the binding data is default as "text"</strong>, you can simply do this:</p>
+        <pre>       <strong>data-tp="name"</strong></pre>
+        <p>And Totem-Pole.js would set it as text-binding.</p>
         <br>
 
-        <h3>And then the ViewModel...</h3>
+        <h3>And then the ViewModel</h3>
         <pre><code>
-        var person = new TP("person-template",{
-                                name: "Kevin",
-                                name-color: {color:"blue"}
-                                age: 23,
-                                photo: "&lt;img src='/img/me.jpg' /&gt;"
-                            });
+    var person = new TP("person-template",{
+                            name: "Kevin",
+                            name-color: {color:"blue"}
+                            age: 23,
+                            photo: "&lt;img src='/img/me.jpg' /&gt;"
+                        });
         </code></pre>
         <br>
-        <p>Sure we can set the data later:</p>
+        <p><strong>Sure we can set the data later:</strong></p>
         <pre><code>
-        var person = new TP("person-template");
-        person.setData({
-            name: "Kevin",
-            name-color: {color:"blue"}
-            age: 23,
-            photo: "&lt;img src='/img/me.jpg' /&gt;"
-        });
+    var person = new TP("person-template");
+    person.setData({
+        name: "Kevin",
+        name-color: {color:"blue"}
+        age: 23,
+        photo: "&lt;img src='/img/me.jpg' /&gt;"
+    });
         </code></pre>
         <br>
         <p>And we can get the view like this:</p>

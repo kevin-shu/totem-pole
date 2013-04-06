@@ -1,5 +1,5 @@
 /*
- * "Totem-Pole.js" v0.0.1
+ * "Totem-Pole.js" v0.0.2
  * 
  * Copyright 2013 Kevin Shu
  * Released under the MIT license
@@ -11,6 +11,7 @@ TP = (function(){
 		this.view.id='';
 		this.data = parseDom.call(this.view,{});
 		this.setData = setData;
+		this.kill = kill;
 		this.getView = function(){return this.view;};
 		if( (typeof initData)=="object" ){
 			this.setData(initData);
@@ -23,12 +24,24 @@ TP = (function(){
 		}
 	}
 
+	var events = [	"onclick",
+					"onchange",
+					"onfocus",
+					"onkeydown",
+					"onkeypress",
+					"onkeyup",
+					"onmousedown",
+					"onmouseout",
+					"onmouseover",
+					"onmouseup",
+					"onsubmit"	];
+
 	function setData(key, value){
 		if( (typeof key)=="object" ){
 			var data = key;
 			for (_key in data){
 				_this = this.data[_key];
-				renderView.call(_this, _key, data[_key]);
+				renderView.call(_this, _key, data[_key], this);
 			}
 		} else if( (typeof key)=="string" && ["string","object"].indexOf(typeof value)!=-1 ){
 			_this = this.data[key];
@@ -36,21 +49,27 @@ TP = (function(){
 		}
 	}
 
-	function renderView(key, value){
-		elem = this.element;
-		if(this.type=="style"){
+	// This function will be called by each of viewModel's data.
+	function renderView(key, value, viewModel){
+		var elem = this.element;
+		var type = this.type;
+		if(type=="style"){
 			for(_key in value){
 				elem.style[_key]=value[_key];
 			}
-		} else if(this.type=="html"){
+		} else if(type=="attr"){
+			for(_key in value){
+				elem[_key]=value[_key];
+			}
+		} else if(type=="html"){
 			elem.innerHTML = value;
-		} else if(this.type=="text"){
-			elem.innerText = value;
-		} else if(this.type=="click"){
-			elem.onclick = (function(){
+		} else if(events.indexOf(type)!=-1){
+			elem[type] = (function(viewModel){
 				var _this=elem;
-				return function(e){ value.call(_this,e);}
-			})();
+				return function(e){ value.call(_this,viewModel);}
+			})(viewModel);
+		} else if(type=="text" || type==""){
+			elem.innerText = value;
 		}
 	}
 
@@ -65,13 +84,16 @@ TP = (function(){
 			var attrs = this.dataset['tp'].replace(/\s/g, '').split(",");
 			for( _i in attrs){
 				tpData[ attrs[_i].split(":")[0] ] = {
-					type: attrs[_i].split(":")[1],
+					type: attrs[_i].split(":")[1] || "",
 					element: this
 				};
 			}
 		}
-		// console.log(tpData);
 		return tpData;
+	}
+
+	function kill(){
+		this.view.remove();
 	}
 
 	return that;
