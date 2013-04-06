@@ -40,19 +40,33 @@
 	</div>
 
 	<div id="template-bucket" style="display:none">
-		<div id="event-template" class="list">
-			<span data-tp="event:text"></span>
-			<div class="check-box" data-tp="check:click"></div>
+		<div id="event-template" class="list"  data-tp="mouseover:onmouseover, mouseout:onmouseout">
+			<span data-tp="event"></span>
+			<div class="check-box" data-tp="check:onclick"></div>
 		</div>
 	</div>
 	<script>
 		document.getElementById("send-todo").onclick=function(){
 			var event = document.getElementById("input-todo").value;
-			var check = function(){
-				console.log(this.parentElement);
-				this.innerText="V";
+			var check = function(viewModel){
+				console.log(viewModel);
+				if(this.innerText=="X"){
+					this.innerText="";
+				} else{
+					this.innerText="X";
+					var r = confirm("Delete it now?");
+					if (r){
+						viewModel.kill();
+					}
+				}
 			};
-			var todo = new TP("event-template",{event:event,check:check});
+			var mouseover = function(){
+				this.style.background = "#efefef";
+			};
+			var mouseout = function(){
+				this.style.background = "white";
+			};
+			var todo = new TP("event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
 			document.getElementById("todo-container").appendChild(todo.getView());
 		};
 	</script>
