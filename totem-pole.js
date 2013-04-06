@@ -1,5 +1,5 @@
 /*
- * "Totem-Pole.js" v0.0.1
+ * "Totem-Pole.js" v0.0.2
  * 
  * Copyright 2013 Kevin Shu
  * Released under the MIT license
