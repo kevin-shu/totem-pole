@@ -57,9 +57,9 @@
 		<div class="inpect-block" align="left">
 			<h3>Template:</h3>
 			<pre>
-&lt;div id=&quot;event-template&quot; class=&quot;list&quot;&gt;
-	&lt;span data-tp=&quot;event:text&quot;&gt;&lt;/span&gt;
-	&lt;div class=&quot;check-box&quot; data-tp=&quot;check:click&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;event-template&quot; class=&quot;list&quot;  data-tp=&quot;mouseover:onmouseover, mouseout:onmouseout&quot;&gt;
+	&lt;span data-tp=&quot;event&quot;&gt;&lt;/span&gt;
+	&lt;div class=&quot;check-box&quot; data-tp=&quot;check:onclick&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 			</pre>
 
@@ -67,15 +67,25 @@
 			<pre>
 document.getElementById("send-todo").onclick=function(){
 	var event = document.getElementById("input-todo").value;
-	var check = function(){
-		console.log(this.parentElement);
-		if (this.innerText=="X"){
+	var check = function(viewModel){
+		console.log(viewModel);
+		if(this.innerText=="X"){
 			this.innerText="";
 		} else{
 			this.innerText="X";
+			var r = confirm("Delete it now?");
+			if (r){
+				viewModel.kill();
+			}
 		}
 	};
-	var todo = new TP("event-template",{event:event,check:check});
+	var mouseover = function(){
+		this.style.background = "#efefef";
+	};
+	var mouseout = function(){
+		this.style.background = "white";
+	};
+	var todo = new TP("event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
 	document.getElementById("todo-container").appendChild(todo.getView());
 };
 			</pre>
@@ -91,15 +101,25 @@ document.getElementById("send-todo").onclick=function(){
 	<script>
 		document.getElementById("send-todo").onclick=function(){
 			var event = document.getElementById("input-todo").value;
-			var check = function(){
-				console.log(this.parentElement);
-				if (this.innerText=="X"){
+			var check = function(viewModel){
+				console.log(viewModel);
+				if(this.innerText=="X"){
 					this.innerText="";
 				} else{
 					this.innerText="X";
+					var r = confirm("Delete it now?");
+					if (r){
+						viewModel.kill();
+					}
 				}
 			};
-			var todo = new TP("event-template",{event:event,check:check});
+			var mouseover = function(){
+				this.style.background = "#efefef";
+			};
+			var mouseout = function(){
+				this.style.background = "white";
+			};
+			var todo = new TP("event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
 			document.getElementById("todo-container").appendChild(todo.getView());
 		};
 	</script>
