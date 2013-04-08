@@ -10,3 +10,8 @@ var setTodo1 = confirm("Set Todo1's event as \"123\"?");
 if (setTodo1){
 	todo1.setData("event","123");
 } 
+
+var setErrorData = confirm("Set Todo1's \"ununun\" as \"test\"?");
+if (setErrorData){
+	todo1.setData("ununun","test");
+} 

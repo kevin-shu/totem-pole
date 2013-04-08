@@ -48,11 +48,15 @@ TP = (function(){
 						var data = key;
 						for (_key in data){
 							_this = elemData[_key];
-							renderView.call(_this, _key, data[_key], this);
+							if((typeof _this)!="undefined"){ // If illegal data pass in, ignore it.
+								renderView.call(_this, _key, data[_key], this);
+							}
 						}
 					} else if( (typeof key)=="string" && ["string","object"].indexOf(typeof value)!=-1 ){
 						_this = elemData[key];
-						renderView.call(_this, key, value, this);
+						if((typeof _this)!="undefined"){ // If illegal data pass in, ignore it.
+							renderView.call(_this, key, value, this);
+						}
 					}
 					this.html = this.view.outerHTML;
 				}
