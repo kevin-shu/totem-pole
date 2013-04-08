@@ -43,19 +43,20 @@ TP = (function(){
 		var elemData = parseDom.call(view,{});
 
 		return 	function (key, value){
-					this.data[key] = value;
 					if( (typeof key)=="object" ){
 						var data = key;
 						for (_key in data){
 							_this = elemData[_key];
 							if((typeof _this)!="undefined"){ // If illegal data pass in, ignore it.
 								renderView.call(_this, _key, data[_key], this);
+								this.data[_key] = data[_key];
 							}
 						}
 					} else if( (typeof key)=="string" && ["string","object"].indexOf(typeof value)!=-1 ){
 						_this = elemData[key];
 						if((typeof _this)!="undefined"){ // If illegal data pass in, ignore it.
 							renderView.call(_this, key, value, this);
+							this.data[key] = value;
 						}
 					}
 					this.html = this.view.outerHTML;
