@@ -1,5 +1,5 @@
 alert("Generate todo1...");
-var todo1 = new TP("event-template",{"set-id":{id:"555"}});
+var todo1 = new TP("event-template",{id:"555"});
 document.getElementById("todo-container").appendChild(todo1.view);
 
 alert("Generate todo2...");

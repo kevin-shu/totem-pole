@@ -1,5 +1,5 @@
 /*
- * "Totem-Pole.js" v0.0.3
+ * "Totem-Pole.js" v0.0.4
  * 
  * Copyright 2013 Kevin Shu
  * Released under the MIT license
@@ -13,6 +13,7 @@ TP = (function(){
 		this.data = {};
 		this.setData = returnSetData( this.view );
 		this.kill = kill;
+		this.html = this.view.outerHTML;
 
 		if( (typeof initData)=="object" ){
 			this.setData(initData);
@@ -53,6 +54,7 @@ TP = (function(){
 						_this = elemData[key];
 						renderView.call(_this, key, value, this);
 					}
+					this.html = this.view.outerHTML;
 				}
 	}
 
@@ -74,6 +76,8 @@ TP = (function(){
 			elem[type] = function(e){ value.call(elem,viewModel);};
 		} else if(type=="text" || type==""){
 			elem.innerText = value;
+		} else{
+			elem[key]=value;
 		}
 	}
 
