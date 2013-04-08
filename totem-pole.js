@@ -48,14 +48,14 @@ TP = (function(){
 						for (_key in data){
 							_this = elemData[_key];
 							if((typeof _this)!="undefined"){ // If illegal data pass in, ignore it.
-								renderView.call(_this, _key, data[_key], this);
+								renderView.call(_this, data[_key], this);
 								this.data[_key] = data[_key];
 							}
 						}
 					} else if( (typeof key)=="string" && ["string","object"].indexOf(typeof value)!=-1 ){
 						_this = elemData[key];
 						if((typeof _this)!="undefined"){ // If illegal data pass in, ignore it.
-							renderView.call(_this, key, value, this);
+							renderView.call(_this, value, this);
 							this.data[key] = value;
 						}
 					}
@@ -64,25 +64,25 @@ TP = (function(){
 	}
 
 	// This function will be called by each of viewModel's data.
-	function renderView(key, value, viewModel){
+	function renderView(data, viewModel){
 		var elem = this.element;
 		var type = this.type;
 		if(type=="style"){
-			for(_key in value){
-				elem.style[_key]=value[_key];
+			for(_key in data){
+				elem.style[_key]=data[_key];
 			}
 		} else if(type=="attr"){
-			for(_key in value){
-				elem[_key]=value[_key];
+			for(_key in data){
+				elem[_key]=data[_key];
 			}
 		} else if(type=="html"){
-			elem.innerHTML = value;
+			elem.innerHTML = data;
 		} else if(events.indexOf(type)!=-1){
-			elem[type] = function(e){ value.call(elem,viewModel);};
+			elem[type] = function(e){ data.call(elem,viewModel);};
 		} else if(type=="text" || type==""){
-			elem.innerText = value;
+			elem.innerText = data;
 		} else{
-			elem[key]=value;
+			elem[type]=data;
 		}
 	}
 
