@@ -1,5 +1,5 @@
 /*
- * "Totem-Pole.js" v0.0.2
+ * "Totem-Pole.js" v0.0.3
  * 
  * Copyright 2013 Kevin Shu
  * Released under the MIT license
@@ -7,12 +7,15 @@
 
 TP = (function(){
 	var that = function(id, initData){
+
 		this.view = document.getElementById(id).cloneNode(true);
 		this.view.id='';
-		this.data = parseDom.call(this.view,{});
+		this.data = {};
 		this.setData = setData;
 		this.kill = kill;
-		this.getView = function(){return this.view;};
+
+		elemData = parseDom.call(this.view,{});
+
 		if( (typeof initData)=="object" ){
 			this.setData(initData);
 		}
@@ -23,6 +26,8 @@ TP = (function(){
 			that.prototype[fnName]=fn[fnName];
 		}
 	}
+
+	var elemData = {};
 
 	var events = [	"onclick",
 					"onchange",
@@ -37,16 +42,20 @@ TP = (function(){
 					"onsubmit"	];
 
 	function setData(key, value){
+		console.log(this);
 		if( (typeof key)=="object" ){
 			var data = key;
 			for (_key in data){
-				_this = this.data[_key];
+				_this = elemData[_key];
 				renderView.call(_this, _key, data[_key], this);
+				this.data[_key] = data[_key];
 			}
 		} else if( (typeof key)=="string" && ["string","object"].indexOf(typeof value)!=-1 ){
-			_this = this.data[key];
-			renderView.call(_this, key, value);
+			_this = elemData[key];
+			renderView.call(_this, key, value, this);
+			this.data[key] = value;
 		}
+		console.log(this.data);
 	}
 
 	// This function will be called by each of viewModel's data.
@@ -64,10 +73,7 @@ TP = (function(){
 		} else if(type=="html"){
 			elem.innerHTML = value;
 		} else if(events.indexOf(type)!=-1){
-			elem[type] = (function(viewModel){
-				var _this=elem;
-				return function(e){ value.call(_this,viewModel);}
-			})(viewModel);
+			elem[type] = function(e){ value.call(elem,viewModel);};
 		} else if(type=="text" || type==""){
 			elem.innerText = value;
 		}
