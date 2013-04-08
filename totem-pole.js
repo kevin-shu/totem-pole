@@ -11,10 +11,8 @@ TP = (function(){
 		this.view = document.getElementById(id).cloneNode(true);
 		this.view.id='';
 		this.data = {};
-		this.setData = setData;
+		this.setData = returnSetData( this.view );
 		this.kill = kill;
-
-		elemData = parseDom.call(this.view,{});
 
 		if( (typeof initData)=="object" ){
 			this.setData(initData);
@@ -26,8 +24,6 @@ TP = (function(){
 			that.prototype[fnName]=fn[fnName];
 		}
 	}
-
-	var elemData = {};
 
 	var events = [	"onclick",
 					"onchange",
@@ -41,21 +37,23 @@ TP = (function(){
 					"onmouseup",
 					"onsubmit"	];
 
-	function setData(key, value){
-		console.log(this);
-		if( (typeof key)=="object" ){
-			var data = key;
-			for (_key in data){
-				_this = elemData[_key];
-				renderView.call(_this, _key, data[_key], this);
-				this.data[_key] = data[_key];
-			}
-		} else if( (typeof key)=="string" && ["string","object"].indexOf(typeof value)!=-1 ){
-			_this = elemData[key];
-			renderView.call(_this, key, value, this);
-			this.data[key] = value;
-		}
-		console.log(this.data);
+	function returnSetData(view){
+
+		var elemData = parseDom.call(view,{});
+
+		return 	function (key, value){
+					this.data[key] = value;
+					if( (typeof key)=="object" ){
+						var data = key;
+						for (_key in data){
+							_this = elemData[_key];
+							renderView.call(_this, _key, data[_key], this);
+						}
+					} else if( (typeof key)=="string" && ["string","object"].indexOf(typeof value)!=-1 ){
+						_this = elemData[key];
+						renderView.call(_this, key, value, this);
+					}
+				}
 	}
 
 	// This function will be called by each of viewModel's data.

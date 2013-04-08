@@ -69,5 +69,13 @@
 			document.getElementById("todo-container").appendChild(todo.view);
 		};
 	</script>
+	<script>
+		var isTest = confirm("Start testing?");
+		if(isTest){
+			var _test = document.createElement("script");
+			_test.src = "./test-script.js";
+			document.body.appendChild(_test);
+		}
+	</script>
 </body>
 </html>
