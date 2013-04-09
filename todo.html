@@ -120,7 +120,7 @@ document.getElementById("send-todo").onclick=function(){
 				this.style.background = "white";
 			};
 			var todo = new TP("event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
-			document.getElementById("todo-container").appendChild(todo.getView());
+			document.getElementById("todo-container").appendChild(todo.view);
 		};
 	</script>
 </body>
