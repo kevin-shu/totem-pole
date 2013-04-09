@@ -15,3 +15,8 @@ var setErrorData = confirm("Set Todo1's \"ununun\" as \"test\"?");
 if (setErrorData){
 	todo1.setData("ununun","test");
 } 
+
+var setErrorData = confirm("Set Todo1's \"check\" as \"function(viewModel){viewModel.kill();}\"?");
+if (setErrorData){
+	todo1.setData( "check", function(vm){vm.kill();} );
+}
