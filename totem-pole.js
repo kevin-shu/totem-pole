@@ -1,5 +1,5 @@
 /*
- * "Totem-Pole.js" v0.0.5
+ * "Totem-Pole.js" v0.0.6
  * 
  * Copyright 2013 Kevin Shu
  * Released under the MIT license
@@ -9,58 +9,76 @@
 
     if ( 'undefined' === typeof TP ) {
 
+        var subscriber = { any:[] };
+
         TP = function(id, initData) {
             this.view = document.getElementById(id).cloneNode(true);
             this.view.id='';
             this.data = {};
-            this.setData = returnSetData( this.view );
+            this.set = returnSet( this.view );
             this.kill = kill;
             this.html = this.view.outerHTML;
 
             if ( (typeof initData)==="object" ) {
-                this.setData(initData);
+                this.set(initData);
             }
         };
 
-        TP.extend = function(fnName, fn) {
-            for ( var fnName in fn ) {
-                that.prototype[fnName] = fn[fnName];
+        TP.subscribe = function (event, callback) {
+            if (typeof event == "function") {
+                callback = event;
+                event = "any";
             }
+            subscriber[event] = subscriber[event]||[];
+            subscriber[event].push(callback);
         };
+
+        TP.publish = function (event, args) {
+            var i=0,
+                max=subscriber[event].length;
+            if ( (typeof event)=="object" && args==null) {
+                args = event;
+                event = "any";
+            }
+            for (;i<max;i++) {
+                subscriber[event][i].apply(null,args);
+            }
+        }
     }
 
-    var events = [  "onclick",
-                    "onchange",
-                    "onfocus",
-                    "onkeydown",
-                    "onkeypress",
-                    "onkeyup",
-                    "onmousedown",
-                    "onmouseout",
-                    "onmouseover",
-                    "onmouseup",
-                    "onsubmit"  ];
+    // All the events that available
+    var events = [  "click",
+                    "change",
+                    "focus",
+                    "keydown",
+                    "keypress",
+                    "keyup",
+                    "mousedown",
+                    "mouseout",
+                    "mouseover",
+                    "mouseup",
+                    "submit"  ];
 
-    function returnSetData(view) {
+    function returnSet(view) {
 
         var elemData = parseDom.call(view,{});
+
+        function setByOnce(key, value) {
+            if ( elemData.hasOwnProperty(key) ) { // If illegal data pass in, ignore it.
+                var _this = elemData[key];
+                renderView.call(_this, value, this); // "this" presents viewModel
+                this.data[key] = value;
+            }
+        }
 
         return  function (key, value) {
                     if ( (typeof key)==="object" ) {
                         var data = key;
                         for ( var _key in data) {
-                            if( elemData.hasOwnProperty(_key) ){ // If illegal data pass in, ignore it.
-                                var _this = elemData[_key];
-                                renderView.call(_this, data[_key], this);
-                                this.data[_key] = data[_key];
-                            }
+                            setByOnce.call(this, _key, data[_key]);
                         }
                     } else if ( (typeof key)==="string" && ["string","object","function"].indexOf(typeof value)!==-1 ) {
-                        if ( elemData.hasOwnProperty(key) ) { // If illegal data pass in, ignore it.
-                            var _this = elemData[key];
-                            renderView.call(_this, value, this);
-                            this.data[key] = value;
-                        }
+                        setByOnce.call(this, key, value);
                     }
                     this.html = this.view.outerHTML;
                 }
@@ -81,7 +99,7 @@
         } else if ( type==="html" ) {
             elem.innerHTML = data;
         } else if ( events.indexOf(type)!==-1 ) {
-            elem[type] = function(e){ data.call(elem,viewModel);};
+            elem["on"+type] = function(e){ data.call(elem,viewModel);};
         } else if ( type==="text" || type==="" ) {
             elem.innerText = data;
         } else {
