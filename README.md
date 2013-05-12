@@ -19,5 +19,5 @@ ViewModel's attributes & methods:
 * html - html string
 * data - viewModel's data
 * kill() - remove the viewModel's view
-* setData(data) - pass a data object to batch-update viewModel's data
-* setData(key, value) - set a data "key" as "value"
+* set(data) - pass a data object to batch-update viewModel's data
+* set(key, value) - set a data "key" as "value"
