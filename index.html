@@ -44,7 +44,7 @@
         Age: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">age</strong>:<strong style="color:blue">text</strong>&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
         </code></pre>
-        <p>As you see, we can bind the view's "html", "text", and "style". And also "onclick", "onmouseover"... you could watch the supported event <a href="https://github.com/kevin-shu/totem-pole/wiki/Events-binding">here</a>.</p>
+        <p>As you see, we can bind the view's "html", "text", and "style". And also "click", "mouseover"... you could watch the supported event <a href="https://github.com/kevin-shu/totem-pole/wiki/Events-binding">here</a>.</p>
         <p><strong>Since the binding data is default as "text"</strong>, you can simply do this:</p>
         <pre>       <strong>data-tp="name"</strong></pre>
         <p>And Totem-Pole.js would set it as text-binding.</p>
@@ -63,7 +63,7 @@
         <p><strong>Sure we can set the data later:</strong></p>
         <pre><code>
     var person = new TP("person-template");
-    person.setData({
+    person.set({
         name: "Kevin",
         name-color: {color:"blue"}
         age: 23,
