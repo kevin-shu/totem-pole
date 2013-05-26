@@ -42,20 +42,21 @@
 	<div id="template-bucket" style="display:none">
 		<div id="event-template" class="list"  data-tp="id:id, mouseover:onmouseover, mouseout:onmouseout">
 			<span data-tp="event"></span>
-			<div class="check-box" data-tp="check:click"></div>
+			<div class="check-box" data-tp="check:click, isCheck"></div>
+		</div>
+		<div id="issue-ticket">
+			<input data-tp="issue:value" />
 		</div>
 	</div>
 	<script>
 		document.getElementById("send-todo").onclick=function(){
 			var event = document.getElementById("input-todo").value;
-			var check = function(viewModel){
-				if(this.innerText=="X"){
-					this.innerText="";
-				} else{
-					this.innerText="X";
+			var check = function(vm){
+				vm.set( "isCheck", vm.data.isCheck=="X" ? "":"X" );
+				if(vm.data.isCheck=="X"){
 					var r = confirm("Delete it now?");
 					if (r){
-						viewModel.kill();
+						vm.kill();
 					}
 				}
 			};
