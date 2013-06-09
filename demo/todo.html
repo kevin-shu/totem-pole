@@ -32,10 +32,21 @@
 <body>
 	<div id="container" align="center">
 		<h1>TODO list</h1>
-		<div id="todo-container"></div>
+		<div id="todo-container">
+			<div id="first-event" class="list" data-tp="id:id, mouseover:onmouseover, mouseout:onmouseout">
+				<span data-tp="event">123</span>
+				<div class="check-box" data-tp="check:click, isCheck"></div>
+			</div>
+		</div>
 		<div style="width:400px">
 			<input id="input-todo" placeholder="type something here..."/>
 			<button id="send-todo">send</button>
+		</div>
+		<hr>
+		<div id="ui-binding" style="width:400px">
+			You're creating :<span data-tp="content:text"></span>
+			<br>
+			<input data-tp="content:value"/>
 		</div>
 	</div>
 
@@ -66,9 +77,10 @@
 			var mouseout = function(){
 				this.style.background = "white";
 			};
-			var todo = new TP("event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
+			var todo = TP.template("event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
 			document.getElementById("todo-container").appendChild(todo.view);
 		};
+		TP("ui-binding");
 	</script>
 	<script>
 		var isTest = confirm("Start testing?");
