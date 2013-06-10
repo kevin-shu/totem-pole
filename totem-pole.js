@@ -225,8 +225,9 @@
                     element.innerText = data;
                 } else if ( type==="value" ) {
                     element.value = data;
-                    // element.addEventListener( "change", function(e){ viewModel.set(key, element.value);/*TP.publish("ui-change", [viewModel, key, element.value]);*/ } );
-                    element.onchange = function(e){ viewModel.set(key, element.value);/*TP.publish("ui-change", [viewModel, key, element.value]);*/ } ;
+                    (function(key, element){
+                        element.onchange = function(e){ viewModel.set(key, element.value);};
+                    })(key, element);
                 } else {
                     element[type]=data;
                 }
