@@ -1,5 +1,5 @@
 /*
- * "Totem-Pole.js" v0.0.8
+ * "Totem-Pole.js" v0.0.9
  * 
  * Copyright 2013 Kevin Shu
  * Released under the MIT license
@@ -14,27 +14,44 @@
         // All the events that available
         EVENTS = [  "click", "change", "focus", "keydown", "keypress", "keyup", "mousedown", "mouseout", "mouseover", "mouseup", "submit"  ];
 
-    TP = function(id, initData) {
-        var view = (id=="body") ? document.body : document.getElementById(id);
+    TP = function(selector, initData) {
+        // var view = (id=="body") ? document.body : document.getElementById(id);
+        var view = document.querySelectorAll(selector)
+        if (view.length===1) {
+            view = view[0];
+            if (initData instanceof Array) {
+                if (initData.length == 0) {
+                    view.style.display = "none";
+                    return null;
+                } else {
+                    var that = [],
+                        groupName = selector.split(" ")[selector.split(" ").length-1],
+                        i=1,
+                        max=initData.length;
+                    that.push( Totem.call({view:view},initData[0],groupName) );
 
-        if (initData instanceof Array) {
-            var that = [];
-                i=1,
-                max=initData.length;
-            that = [];
-            that.push( Totem.call({view:view},initData[0],id) );
-
-            for(;i<max;i++){
-                var clonedView = view.cloneNode(true),
-                    totem = Totem.call({view:clonedView},initData[i],id);
-                clonedView.id = '';
-                that.push(totem);
-                insertAfter(clonedView, view); // Insert after the last node.
-                view = clonedView; // Set view as last node.
+                    for(;i<max;i++){
+                        var clonedView = view.cloneNode(true),
+                            totem = Totem.call({view:clonedView},initData[i],groupName);
+                        clonedView.id = '';
+                        that.push(totem);
+                        insertAfter(clonedView, view); // Insert after the last node.
+                        view = clonedView; // Set view as last node.
+                    }
+                    return that;
+                }
+            } else {
+                return Totem.call({view:view},initData);
             }
-            return that;
-        } else {
-            return Totem.call({view:view},initData);
+        } else if (view.length>1) {
+            // If selected multiple dom...2013/6/11
+            var max = view.length,
+                i = 0,
+                totems=[];
+            for (;i<max;i++) {
+                totems.push(Totem.call({view:view[i]},initData));
+            }
+            return totems;
         }
     };
 
@@ -168,12 +185,12 @@
 
         // Set one attritute a time
         function setByOnce(key, value) {
-            if ( elemDatas.hasOwnProperty(key) ) { // If illegal data pass in, ignore it.
-                var _this = elemDatas[key];
+            // if ( elemDatas.hasOwnProperty(key) ) { // If illegal data pass in, ignore it.
+                // var _this = elemDatas[key];
                 if (typeof value != "function") {
                     this.data[key] = value;
                 }
-            }
+            // }
         }
 
         return  function (key, value) {
@@ -217,7 +234,7 @@
                     }
                 } else if ( type==="html" ) {
                     element.innerHTML = data;
-                } else if ( EVENTS.indexOf(type)!==-1 ) {
+                } else if ( EVENTS.indexOf(type)!==-1 && data) {
                     (function(elem, data){
                         elem.addEventListener(type, function(e){ data.call(elem, viewModel); });
                     })(element, data);
