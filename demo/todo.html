@@ -24,6 +24,9 @@
 			-moz-box-shadow:    3px 3px 6px rgba(50, 50, 50, 0.75);
 			box-shadow:         3px 3px 6px rgba(50, 50, 50, 0.75);
 		}
+		.danger{
+			background-color: red;
+		}
 		#todo-container{
 			width:400px;
 		}
@@ -80,7 +83,7 @@
 			var todo = TP.template("event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
 			document.getElementById("todo-container").appendChild(todo.view);
 		};
-		TP("ui-binding");
+		TP("#ui-binding");
 	</script>
 	<script>
 		var isTest = confirm("Start testing?");

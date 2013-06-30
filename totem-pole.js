@@ -1,5 +1,5 @@
 /*
- * "Totem-Pole.js" v0.0.9
+ * "Totem-Pole.js" v0.0.10
  * 
  * Copyright 2013 Kevin Shu
  * Released under the MIT license
@@ -55,10 +55,11 @@
         }
     };
 
-    TP.template = function(id, initData){
-        var that={};
-        that.view = document.getElementById(id).cloneNode(true);
-        Totem.call(that, initData, id);
+    TP.template = function(selector, initData){
+        var that={},
+            groupName = selector.split(" ")[selector.split(" ").length-1];
+        that.view = document.querySelector(selector).cloneNode(true);
+        Totem.call(that, initData, groupName);
         return that;
     };
 
@@ -141,6 +142,8 @@
         this.html = this.view.outerHTML;
         this._id = 0;
         this._group = groupName;
+        this.addClass = addClass;
+        this.removeClass = removeClass;
 
         if ( (typeof initData)==="object" ) {
             this.set(initData);
@@ -281,6 +284,23 @@
     function kill() {
         this.view.remove();
         delete groups[this._group][this._id];
+    }
+
+    function addClass(className) {
+        this.view.className += " " + className;
+    }
+
+    function removeClass(className) {
+        var classes = this.view.className.split(" "),
+            i=0,
+            max=classes.length,
+            classList = "";
+        for (;i<max;i++) {
+            if (classes[i]!=className) {
+                classList += " "+classes[i];
+            }
+        }
+        this.view.className = classList;
     }
 
     function initialize() {
