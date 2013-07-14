@@ -1,5 +1,5 @@
 /*
- * "Totem-Pole.js" v0.0.10
+ * "Totem-Pole.js" v0.0.11
  * 
  * Copyright 2013 Kevin Shu
  * Released under the MIT license
@@ -15,7 +15,6 @@
         EVENTS = [  "click", "change", "focus", "keydown", "keypress", "keyup", "mousedown", "mouseout", "mouseover", "mouseup", "submit"  ];
 
     TP = function(selector, initData) {
-        // var view = (id=="body") ? document.body : document.getElementById(id);
         var view = document.querySelectorAll(selector)
         if (view.length===1) {
             view = view[0];
@@ -135,7 +134,6 @@
     // }
 
     function Totem(initData, groupName) {
-        this.view.id='';
         this.data = {};
         this.set = returnSet( this );
         this.kill = kill;
@@ -154,6 +152,8 @@
         }
         this._id = groups[groupName].length;
         groups[groupName].push(this);
+
+        return this
     }
 
 
@@ -208,6 +208,7 @@
                         settings[key] = value;
                     }
                     TP.publish("data-change", [this, elemDatas, settings]);
+                    return viewModel
                 }
     }
 
