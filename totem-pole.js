@@ -142,6 +142,7 @@
         this._group = groupName;
         this.addClass = addClass;
         this.removeClass = removeClass;
+        this.onchange = function(){};
 
         if ( (typeof initData)==="object" ) {
             this.set(initData);
@@ -247,7 +248,10 @@
                 } else if ( type==="value" ) {
                     element.value = data;
                     (function(key, element){
-                        element.onchange = function(e){ viewModel.set(key, element.value);};
+                        element.onchange = function(e){
+                            viewModel.set(key, element.value);
+                            viewModel.onchange();
+                        };
                     })(key, element);
                 } else {
                     element[type]=data;
