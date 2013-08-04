@@ -177,8 +177,8 @@
                     type = elemDatas[key][i].type;
                 if ( type==="html" && element.innerHTML ) {
                     data[key] = element.innerHTML;
-                } else if ( type==="text" && element.innerText ) {
-                    data[key] = element.innerText;
+                } else if ( type==="text" && element.textContent ) {
+                    data[key] = element.textContent;
                 } else if ( type==="value" && element.value ) {
                     data[key] = element.value;
                 }
@@ -244,7 +244,7 @@
                         elem.addEventListener(type, function(e){ data.call(elem, viewModel); });
                     })(element, data);
                 } else if ( type==="text" ) {
-                    element.innerText = data;
+                    element.textContent = data;
                 } else if ( type==="value" ) {
                     element.value = data;
                     (function(key, element){
