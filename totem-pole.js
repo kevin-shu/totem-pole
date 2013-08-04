@@ -204,7 +204,7 @@
                         for ( var _key in settings) {
                             setByOnce.call(this, _key, settings[_key]);
                         }
-                    } else if ( (typeof key)==="string" && ["string","object","function"].indexOf(typeof value)!==-1 ) {
+                    } else if ( (typeof key)==="string" && ["boolean","string","object","function"].indexOf(typeof value)!==-1 ) {
                         setByOnce.call(this, key, value);
                         settings[key] = value;
                     }
@@ -250,6 +250,20 @@
                     (function(key, element){
                         element.onchange = function(e){
                             viewModel.set(key, element.value);
+                            viewModel.onchange();
+                        };
+                    })(key, element);
+                } else if ( type==="check" ) {
+                    if (data instanceof Array) {
+                        if (data.indexOf(element.value)!==-1) {
+                            element.checked=true;
+                        }
+                    } else if(element.value==data){ 
+                        element.checked=true; 
+                    }
+                    (function(key, element){
+                        element.onchange = function(e){
+                            viewModel.set(key, (data instanceof Array) ? viewModel.data[key].push(element.value) : element.value);
                             viewModel.onchange();
                         };
                     })(key, element);
