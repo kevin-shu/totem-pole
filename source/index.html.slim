@@ -59,9 +59,9 @@
       pre
         code
           | &lt;div id=&quot;person-template&quot;&gt;
-              &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">photo</strong>:<strong style="color:blue">html</strong>&quot;&gt;&lt;/div&gt;
-              Name: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">name</strong>:<strong style="color:blue">text</strong>, <strong style="color:green">name-color</strong>:<strong style="color:blue">style</strong>&quot;&gt;&lt;/div&gt;
-              Age: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">age</strong>:<strong style="color:blue">text</strong>&quot;&gt;&lt;/div&gt;
+              &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">html</strong>:<strong style="color:blue">photo</strong>&quot;&gt;&lt;/div&gt;
+              Name: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">text</strong>:<strong style="color:blue">name</strong>, <strong style="color:green">style</strong>:<strong style="color:blue">name-color</strong>&quot;&gt;&lt;/div&gt;
+              Age: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">text</strong>:<strong style="color:blue">age</strong>&quot;&gt;&lt;/div&gt;
             &lt;/div&gt;
       p
         | As you see, we can bind the view's "html", "text", and "style". And also "click", "mouseover"... you could watch the supported event 
@@ -125,21 +125,21 @@
           #controller
             .row
               .col-md-9
-                input#input-todo.form-control.pull-right data-tp="content:value" placeholder="type something here..."
+                input#input-todo.form-control.pull-right data-tp="value:content" placeholder="type something here..."
               .col-md-3
-                button#send-todo.btn.pull-left data-tp="add:click" add
+                button#send-todo.btn.pull-left data-tp="click:add" add
             br
             .row
               .col-md-12
                 | You're creating :
-                span data-tp="content:text"
+                span data-tp="text:content"
 
         #template-bucket style="display:none"
           #event-template.list data-tp="id:id"
             span data-tp="event"
-            .check-box data-tp="check:click, isCheck:html"
+            .check-box data-tp="click:check, html:isCheck"
           #issue-ticket
-            input data-tp="issue:value"
+            input data-tp="value:issue"
 
     .col-lg-6
       .code-wrapper
@@ -173,16 +173,16 @@
               | &lt;div class=&quot;todolist&quot; id=&quot;todolist&quot;&gt;&lt;/div&gt;
                 &lt;hr&gt;
                 &lt;div id=&quot;controller&quot;&gt;
-                  &lt;input class=&quot;form-control pull-right&quot; data-tp=&quot;content:value&quot; id=&quot;input-todo&quot; placeholder=&quot;type something here...&quot;&gt;
-                  &lt;button class=&quot;btn pull-left&quot; data-tp=&quot;add:click&quot; id=&quot;send-todo&quot;&gt;add&lt;/button&gt;
+                  &lt;input class=&quot;form-control pull-right&quot; data-tp=&quot;value:content&quot; id=&quot;input-todo&quot; placeholder=&quot;type something here...&quot;&gt;
+                  &lt;button class=&quot;btn pull-left&quot; data-tp=&quot;click:add&quot; id=&quot;send-todo&quot;&gt;add&lt;/button&gt;
                   &lt;div&gt;
                     You're creating :
-                    &lt;span data-tp=&quot;content:text&quot;&gt;&lt;/span&gt;
+                    &lt;span data-tp=&quot;text:content&quot;&gt;&lt;/span&gt;
                   &lt;/div&gt;
                 &lt;/div&gt;
                 &lt;div id=&quot;template-bucket&quot; style=&quot;display:none&quot;&gt;
                   &lt;div class=&quot;list&quot; data-tp=&quot;id:id&quot; id=&quot;event-template&quot;&gt;
                     &lt;span data-tp=&quot;event&quot;&gt;&lt;/span&gt;
-                    &lt;div class=&quot;check-box&quot; data-tp=&quot;check:click, isCheck:html&quot;&gt;&lt;/div&gt;
+                    &lt;div class=&quot;check-box&quot; data-tp=&quot;click:check, html:isCheck&quot;&gt;&lt;/div&gt;
                   &lt;/div&gt;
                 &lt;/div&gt;

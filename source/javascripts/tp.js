@@ -1,5 +1,5 @@
 /*
- * "Totem-Pole.js" v0.1.0
+ * "Totem-Pole.js" v0.0.11
  * 
  * Copyright 2013 Kevin Shu
  * Released under the MIT license
@@ -142,6 +142,7 @@
         this._group = groupName;
         this.addClass = addClass;
         this.removeClass = removeClass;
+        this.onchange = function(){};
 
         if ( (typeof initData)==="object" ) {
             this.set(initData);
@@ -163,8 +164,6 @@
             key = "",
             data = {};
 
-        console.log(elemDatas);
-
         // This section is for fetching the data already existed in the template.
         // And after that, Totem-pole will "renderView" with the data just fetched from the template.
         // In this way, the "ui-binding" would be established.
@@ -178,12 +177,10 @@
                     type = elemDatas[key][i].type;
                 if ( type==="html" && element.innerHTML ) {
                     data[key] = element.innerHTML;
-                } else if ( type==="text" && element.innerText ) {
-                    data[key] = element.innerText;
+                } else if ( type==="text" && element.textContent ) {
+                    data[key] = element.textContent;
                 } else if ( type==="value" && element.value ) {
                     data[key] = element.value;
-                } else if ( EVENTS.indexOf(type)!==-1 ) {
-                    data[key] = key;
                 }
             }
         }
@@ -207,7 +204,7 @@
                         for ( var _key in settings) {
                             setByOnce.call(this, _key, settings[_key]);
                         }
-                    } else if ( (typeof key)==="string" && ["string","object","function"].indexOf(typeof value)!==-1 ) {
+                    } else if ( (typeof key)==="string" && ["boolean","string","object","function"].indexOf(typeof value)!==-1 ) {
                         setByOnce.call(this, key, value);
                         settings[key] = value;
                     }
@@ -244,16 +241,31 @@
                     element.innerHTML = data;
                 } else if ( EVENTS.indexOf(type)!==-1 && data) {
                     (function(elem, data){
-                        // console.log(data);
-                        var _fn = typeof(data)=="function" ? data : new Function(data+"(arguments[0])");
-                        elem.addEventListener(type, function(e){ _fn.call(elem, viewModel); });
+                        elem.addEventListener(type, function(e){ data.call(elem, viewModel); });
                     })(element, data);
                 } else if ( type==="text" ) {
-                    element.innerText = data;
+                    element.textContent = data;
                 } else if ( type==="value" ) {
                     element.value = data;
                     (function(key, element){
-                        element.onchange = function(e){ viewModel.set(key, element.value);};
+                        element.onchange = function(e){
+                            viewModel.set(key, element.value);
+                            viewModel.onchange();
+                        };
+                    })(key, element);
+                } else if ( type==="check" ) {
+                    if (data instanceof Array) {
+                        if (data.indexOf(element.value)!==-1) {
+                            element.checked=true;
+                        }
+                    } else if(element.value==data){ 
+                        element.checked=true; 
+                    }
+                    (function(key, element){
+                        element.onchange = function(e){
+                            viewModel.set(key, (data instanceof Array) ? viewModel.data[key].push(element.value) : element.value);
+                            viewModel.onchange();
+                        };
                     })(key, element);
                 } else {
                     element[type]=data;
@@ -316,24 +328,4 @@
         //     TP.publish(viewModel._group);
         //     TP.publish("all");
         // });
-        TP.subscribe("data-change", function(viewModel, elemDatas, settings){
-            renderView(viewModel, elemDatas, settings); // "this" represents viewModel
-            viewModel.html = viewModel.view.outerHTML;
-            TP.publish(viewModel._group);
-            TP.publish("all");
-        });
-    }
-
-    function insertAfter(newElement, ref) {
-        var refParent = ref.parentNode;
-        var refNext = ref.nextSibling;
-
-        if (refNext === null) {
-            refParent.appendChild(newElement);
-        } else {
-            refParent.insertBefore(newElement, refNext);
-        }
-        return newElement;
-    }
-    
-})();
+        TP.subscribe("data-change", function(viewModel, elemData
