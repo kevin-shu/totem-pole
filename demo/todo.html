@@ -80,7 +80,7 @@
 			var mouseout = function(){
 				this.style.background = "white";
 			};
-			var todo = TP.template("event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
+			var todo = TP.template("#event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
 			document.getElementById("todo-container").appendChild(todo.view);
 		};
 		TP("#ui-binding");
