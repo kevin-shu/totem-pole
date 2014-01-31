@@ -1,71 +1,188 @@
-.navbar.navbar-default.navbar-fixed-top
-  .container
-    .navbar-header
-      a.navbar-brand href="../"
-      button.navbar-toggle data-target="#navbar-main" data-toggle="collapse" type="button"
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-    #navbar-main.navbar-collapse.collapse
-      ul.nav.navbar-nav
-        li.dropdown
-          a#themes.dropdown-toggle data-toggle="dropdown" href="#"
-            | Themes
-            span.caret
-          ul.dropdown-menu aria-labelledby="themes"
-            li
-              a href="../default/" tabindex="-1"
-            li.divider
-            li
-              a href="../amelia/" tabindex="-1"
-            li
-              a href="../cerulean/" tabindex="-1"
-            li
-              a href="../cosmo/" tabindex="-1"
-            li
-              a href="../cyborg/" tabindex="-1"
-            li
-              a href="../flatly/" tabindex="-1"
-            li
-              a href="../journal/" tabindex="-1"
-            li
-              a href="../readable/" tabindex="-1"
-            li
-              a href="../simplex/" tabindex="-1"
-            li
-              a href="../slate/" tabindex="-1"
-            li
-              a href="../spacelab/" tabindex="-1"
-            li
-              a href="../united/" tabindex="-1"
-            li
-              a href="../yeti/" tabindex="-1"
-        li
-          a href="../help/"
-        li
-          a href="http://news.bootswatch.com"
-        li.dropdown
-          a#download.dropdown-toggle data-toggle="dropdown" href="#"
-            | Download
-            span.caret
-          ul.dropdown-menu aria-labelledby="download"
-            li
-              a href="./bootstrap.min.css" tabindex="-1"
-            li
-              a href="./bootstrap.css" tabindex="-1"
-            li.divider
-            li
-              a href="./variables.less" tabindex="-1"
-            li
-              a href="./bootswatch.less" tabindex="-1"
-      ul.nav.navbar-nav.navbar-right
-        li
-          a href="http://builtwithbootstrap.com/" target="_blank"
-        li
-          a href="https://wrapbootstrap.com/?ref=bsw" target="_blank"
+/ .navbar.navbar-default.navbar-fixed-top
+/   .container
+/     .navbar-header
+/       a.navbar-brand href="../"
+/       button.navbar-toggle data-target="#navbar-main" data-toggle="collapse" type="button"
+/         span.icon-bar
+/         span.icon-bar
+/         span.icon-bar
+/     #navbar-main.navbar-collapse.collapse
+/       ul.nav.navbar-nav
+/         li.dropdown
+/           a#themes.dropdown-toggle data-toggle="dropdown" href="#"
+/             | Themes
+/             span.caret
+/           ul.dropdown-menu aria-labelledby="themes"
+/             li
+/               a href="../default/" tabindex="-1"
+/             li.divider
+/             li
+/               a href="../amelia/" tabindex="-1"
+/         li
+/           a href="../help/"
+/         li
+/           a href="http://news.bootswatch.com"
+/         li.dropdown
+/           a#download.dropdown-toggle data-toggle="dropdown" href="#"
+/             | Download
+/             span.caret
+/           ul.dropdown-menu aria-labelledby="download"
+/             li
+/               a href="./bootstrap.min.css" tabindex="-1"
+/             li
+/               a href="./bootstrap.css" tabindex="-1"
+/             li.divider
+/             li
+/               a href="./variables.less" tabindex="-1"
+/             li
+/               a href="./bootswatch.less" tabindex="-1"
+/       ul.nav.navbar-nav.navbar-right
+/         li
+/           a href="http://builtwithbootstrap.com/" target="_blank"
+/         li
+/           a href="https://wrapbootstrap.com/?ref=bsw" target="_blank"
 
-.brand-wrapper
-  h1.brand Totem-Pole.js
-  h2 Fast, light, MVVM framework.
-  a.btn.download-btn.btn-lg href="https://github.com/kevin-shu/totem-pole/zipball/master"
-    | Download (v 0.0.11)
+.container
+  .brand-wrapper
+    h1.brand Totem-Pole.js
+    h2 Fast, light, MVVM framework.
+    a.btn.download-btn.btn-lg href="https://github.com/kevin-shu/totem-pole/zipball/master"
+      | Download (v 0.0.11)
+
+  hr.section-divider
+
+  .row
+    .col-lg-3
+    .col-lg-6
+      h3 Start with view's template
+      p First we set a template:
+      pre
+        code
+          | &lt;div id=&quot;person-template&quot;&gt;
+              &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">photo</strong>:<strong style="color:blue">html</strong>&quot;&gt;&lt;/div&gt;
+              Name: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">name</strong>:<strong style="color:blue">text</strong>, <strong style="color:green">name-color</strong>:<strong style="color:blue">style</strong>&quot;&gt;&lt;/div&gt;
+              Age: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">age</strong>:<strong style="color:blue">text</strong>&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+      p
+        | As you see, we can bind the view's "html", "text", and "style". And also "click", "mouseover"... you could watch the supported event 
+        a href="https://github.com/kevin-shu/totem-pole/wiki/Events-binding" here
+        | .
+      p
+        strong Since the binding data is default as "text"
+        | , you can simply do this:
+      pre
+        | strong data-tp="name"
+      p And Totem-Pole.js would set it as text-binding.
+      br
+      h3 And then the ViewModel
+      pre
+        code
+          | var person = new TP("person-template",{
+                                   name: "Kevin",
+                                   name-color: {color:"blue"}
+                                   age: 23,
+                                   photo: "&lt;img src='/img/me.jpg' /&gt;"
+                               });
+      br
+      p
+        strong Sure we can set the data later:
+      pre
+        code
+          | var person = new TP("person-template");
+            person.set({
+                name: "Kevin",
+                name-color: {color:"blue"}
+                age: 23,
+                photo: "&lt;img src='/img/me.jpg' /&gt;"
+            });
+      br
+      p And we can get the view like this:
+      pre
+        code
+          | document.body.appendChild(person.view);
+      br
+      p Isn't that easy? Try the followed example!
+
+    .col-lg-3
+
+  hr.section-divider
+
+  .row
+    .col-lg-6
+      .todo-wrapper
+        h2 Demo: 
+        br
+        .well
+          .h2 TODO list
+          br
+          #todolist.todolist
+            / #first-event.list data-tp="id:id"
+            /   span data-tp="event"
+            /   .check-box data-tp="check:click, isCheck"
+
+          hr
+
+          #controller
+            .row
+              .col-md-9
+                input#input-todo.form-control.pull-right data-tp="content:value" placeholder="type something here..."
+              .col-md-3
+                button#send-todo.btn.pull-left data-tp="add:click" add
+            br
+            .row
+              .col-md-12
+                | You're creating :
+                span data-tp="content:text"
+
+        #template-bucket style="display:none"
+          #event-template.list data-tp="id:id"
+            span data-tp="event"
+            .check-box data-tp="check:click, isCheck:html"
+          #issue-ticket
+            input data-tp="issue:value"
+
+    .col-lg-6
+      .code-wrapper
+        h2 Codes: 
+        br
+        .code-block
+          pre.prettyprint
+            code.language-js
+              | function add(vm) {
+                    var content = vm.data["content"];
+                    var check = function(vm){
+                    vm.set( "isCheck", vm.data.isCheck=="&times;" ? "":"&times;" );
+                    if(vm.data.isCheck=="&times;"){
+                        var r = confirm("Delete it now?");
+                            if (r){
+                                vm.kill();
+                            }
+                        }
+                    };
+                    var todo = TP.template(
+                        "#event-template",
+                        {event:content,check:check}
+                    );
+                    document.getElementById("todolist").appendChild(todo.view);
+                }
+                TP("#controller");
+
+        .code-block
+          pre
+            code
+              | &lt;div class=&quot;todolist&quot; id=&quot;todolist&quot;&gt;&lt;/div&gt;
+                &lt;hr&gt;
+                &lt;div id=&quot;controller&quot;&gt;
+                  &lt;input class=&quot;form-control pull-right&quot; data-tp=&quot;content:value&quot; id=&quot;input-todo&quot; placeholder=&quot;type something here...&quot;&gt;
+                  &lt;button class=&quot;btn pull-left&quot; data-tp=&quot;add:click&quot; id=&quot;send-todo&quot;&gt;add&lt;/button&gt;
+                  &lt;div&gt;
+                    You're creating :
+                    &lt;span data-tp=&quot;content:text&quot;&gt;&lt;/span&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;template-bucket&quot; style=&quot;display:none&quot;&gt;
+                  &lt;div class=&quot;list&quot; data-tp=&quot;id:id&quot; id=&quot;event-template&quot;&gt;
+                    &lt;span data-tp=&quot;event&quot;&gt;&lt;/span&gt;
+                    &lt;div class=&quot;check-box&quot; data-tp=&quot;check:click, isCheck:html&quot;&gt;&lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;

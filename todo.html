@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 	<title>Totem-pole.js :: TODO list</title>
@@ -11,13 +10,12 @@
 			float:right;
 			width:20px;
 			height:20px;
-			cursor:pointer;
 		}
 		.list{
 			margin: 10px;
 			padding: 10px;
 			height:28px;
-			font-size: x-large;
+			font-size: large;
 			border:5px solid grey;
 			-webkit-border-radius: 8px;
 			-moz-border-radius: 8px;
@@ -26,90 +24,53 @@
 			-moz-box-shadow:    3px 3px 6px rgba(50, 50, 50, 0.75);
 			box-shadow:         3px 3px 6px rgba(50, 50, 50, 0.75);
 		}
+		.danger{
+			background-color: red;
+		}
 		#todo-container{
 			width:400px;
 		}
-		#input-todo{
-			width:300px;
-			height:32px;
-			font-size: large;
-		}
-		#send-todo{
-			height:36px;
-			font-size: large;
-		}
-		pre{
-			background: #eee;
-			padding:20px;
-			overflow:auto;
-		}
-
 	</style>
 </head>
 <body>
-	<div id="container" align="center" style="width:600px; margin:20px auto">
+	<div id="container" align="center">
 		<h1>TODO list</h1>
-		<div id="todo-container"></div>
+		<div id="todo-container">
+			<div id="first-event" class="list" data-tp="id:id, mouseover:onmouseover, mouseout:onmouseout">
+				<span data-tp="event">123</span>
+				<div class="check-box" data-tp="check:click, isCheck"></div>
+			</div>
+		</div>
 		<div style="width:400px">
 			<input id="input-todo" placeholder="type something here..."/>
 			<button id="send-todo">send</button>
 		</div>
-		<div class="inpect-block" align="left">
-			<h3>Template:</h3>
-			<pre>
-&lt;div id=&quot;event-template&quot; class=&quot;list&quot;  data-tp=&quot;mouseover:onmouseover, mouseout:onmouseout&quot;&gt;
-	&lt;span data-tp=&quot;event&quot;&gt;&lt;/span&gt;
-	&lt;div class=&quot;check-box&quot; data-tp=&quot;check:onclick&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-			</pre>
-
-			<h3>Code:</h3>
-			<pre>
-document.getElementById("send-todo").onclick=function(){
-	var event = document.getElementById("input-todo").value;
-	var check = function(viewModel){
-		console.log(viewModel);
-		if(this.innerText=="X"){
-			this.innerText="";
-		} else{
-			this.innerText="X";
-			var r = confirm("Delete it now?");
-			if (r){
-				viewModel.kill();
-			}
-		}
-	};
-	var mouseover = function(){
-		this.style.background = "#efefef";
-	};
-	var mouseout = function(){
-		this.style.background = "white";
-	};
-	var todo = new TP("event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
-	document.getElementById("todo-container").appendChild(todo.view());
-};
-			</pre>
+		<hr>
+		<div id="ui-binding" style="width:400px">
+			You're creating :<span data-tp="content:text"></span>
+			<br>
+			<input data-tp="content:value"/>
 		</div>
 	</div>
 
 	<div id="template-bucket" style="display:none">
-		<div id="event-template" class="list"  data-tp="mouseover:onmouseover, mouseout:onmouseout">
+		<div id="event-template" class="list"  data-tp="id:id, mouseover:onmouseover, mouseout:onmouseout">
 			<span data-tp="event"></span>
-			<div class="check-box" data-tp="check:click"></div>
+			<div class="check-box" data-tp="check:click, isCheck"></div>
+		</div>
+		<div id="issue-ticket">
+			<input data-tp="issue:value" />
 		</div>
 	</div>
 	<script>
 		document.getElementById("send-todo").onclick=function(){
 			var event = document.getElementById("input-todo").value;
-			var check = function(viewModel){
-				console.log(viewModel);
-				if(this.innerText=="X"){
-					this.innerText="";
-				} else{
-					this.innerText="X";
+			var check = function(vm){
+				vm.set( "isCheck", vm.data.isCheck=="X" ? "":"X" );
+				if(vm.data.isCheck=="X"){
 					var r = confirm("Delete it now?");
 					if (r){
-						viewModel.kill();
+						vm.kill();
 					}
 				}
 			};
@@ -119,9 +80,18 @@ document.getElementById("send-todo").onclick=function(){
 			var mouseout = function(){
 				this.style.background = "white";
 			};
-			var todo = new TP("event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
+			var todo = TP.template("#event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
 			document.getElementById("todo-container").appendChild(todo.view);
 		};
+		TP("#ui-binding");
+	</script>
+	<script>
+		var isTest = confirm("Start testing?");
+		if(isTest){
+			var _test = document.createElement("script");
+			_test.src = "./test-script.js";
+			document.body.appendChild(_test);
+		}
 	</script>
 </body>
 </html>

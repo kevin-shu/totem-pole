@@ -10,7 +10,10 @@ html
     title == data.page.title || "The Middleman"
 
     == stylesheet_link_tag "all"
-    == javascript_include_tag  "all"
+    / script src="https://rawgithub.com/kevin-shu/totem-pole/master/totem-pole.min.js" type="text/javascript"
 
   body class="#{page_classes}"
   == yield
+
+  == javascript_include_tag  "all"
+  script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"
