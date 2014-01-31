@@ -1,7 +1,7 @@
 /*
- * "Totem-Pole.js" v0.0.11
+ * "Totem-Pole.js" v0.1.0
  * 
- * Copyright 2013 Kevin Shu
+ * Copyright 2014 Kevin Shu
  * Released under the MIT license
  */
 
@@ -142,7 +142,6 @@
         this._group = groupName;
         this.addClass = addClass;
         this.removeClass = removeClass;
-        this.onchange = function(){};
 
         if ( (typeof initData)==="object" ) {
             this.set(initData);
@@ -177,10 +176,12 @@
                     type = elemDatas[key][i].type;
                 if ( type==="html" && element.innerHTML ) {
                     data[key] = element.innerHTML;
-                } else if ( type==="text" && element.textContent ) {
-                    data[key] = element.textContent;
+                } else if ( type==="text" && element.innerText ) {
+                    data[key] = element.innerText;
                 } else if ( type==="value" && element.value ) {
                     data[key] = element.value;
+                } else if ( EVENTS.indexOf(type)!==-1 ) {
+                    data[key] = key;
                 }
             }
         }
@@ -204,7 +205,7 @@
                         for ( var _key in settings) {
                             setByOnce.call(this, _key, settings[_key]);
                         }
-                    } else if ( (typeof key)==="string" && ["boolean","string","object","function"].indexOf(typeof value)!==-1 ) {
+                    } else if ( (typeof key)==="string" && ["string","object","function"].indexOf(typeof value)!==-1 ) {
                         setByOnce.call(this, key, value);
                         settings[key] = value;
                     }
@@ -241,31 +242,17 @@
                     element.innerHTML = data;
                 } else if ( EVENTS.indexOf(type)!==-1 && data) {
                     (function(elem, data){
-                        elem.addEventListener(type, function(e){ data.call(elem, viewModel); });
+                        var _fn = function(){
+                            eval(data+".call(elem, viewModel);");
+                        }
+                        elem.addEventListener(type, function(e){ _fn(); });
                     })(element, data);
                 } else if ( type==="text" ) {
-                    element.textContent = data;
+                    element.innerText = data;
                 } else if ( type==="value" ) {
                     element.value = data;
                     (function(key, element){
-                        element.onchange = function(e){
-                            viewModel.set(key, element.value);
-                            viewModel.onchange();
-                        };
-                    })(key, element);
-                } else if ( type==="check" ) {
-                    if (data instanceof Array) {
-                        if (data.indexOf(element.value)!==-1) {
-                            element.checked=true;
-                        }
-                    } else if(element.value==data){ 
-                        element.checked=true; 
-                    }
-                    (function(key, element){
-                        element.onchange = function(e){
-                            viewModel.set(key, (data instanceof Array) ? viewModel.data[key].push(element.value) : element.value);
-                            viewModel.onchange();
-                        };
+                        element.onchange = function(e){ viewModel.set(key, element.value);};
                     })(key, element);
                 } else {
                     element[type]=data;
@@ -284,20 +271,23 @@
         if (this.dataset && this.dataset['tp']) {
             var attrs = this.dataset['tp'].replace(/\s/g, '').split(",");
             for ( var _i in attrs) {
-                if (tpData[ attrs[_i].split(":")[0] ]) { // If this data has been registered
-                    tpData[ attrs[_i].split(":")[0] ].push({
-                        type: attrs[_i].split(":")[1] || "text",
+                var args = attrs[_i].split(":");
+                if (args.length==1) {
+                    args = [null].concat(args);
+                }
+                if (tpData[ args[1] ]) { // If this data has been registered
+                    tpData[ args[1] ].push({
+                        type: args[0] || "text",
                         dom: this
                     });
                 } else {
-                    tpData[ attrs[_i].split(":")[0] ] = [{
-                        type: attrs[_i].split(":")[1] || "text",
+                    tpData[ args[1] ] = [{
+                        type: args[0] || "text",
                         dom: this
                     }];
                 }
             }
         }
-        console.log(tpData);
         return tpData;
     }
 
