@@ -297,6 +297,7 @@
                 }
             }
         }
+        console.log(tpData);
         return tpData;
     }
 
@@ -328,4 +329,24 @@
         //     TP.publish(viewModel._group);
         //     TP.publish("all");
         // });
-        TP.subscribe("data-change", function(viewModel, elemData
+        TP.subscribe("data-change", function(viewModel, elemDatas, settings){
+            renderView(viewModel, elemDatas, settings); // "this" represents viewModel
+            viewModel.html = viewModel.view.outerHTML;
+            TP.publish(viewModel._group);
+            TP.publish("all");
+        });
+    }
+
+    function insertAfter(newElement, ref) {
+        var refParent = ref.parentNode;
+        var refNext = ref.nextSibling;
+
+        if (refNext === null) {
+            refParent.appendChild(newElement);
+        } else {
+            refParent.insertBefore(newElement, refNext);
+        }
+        return newElement;
+    }
+    
+})();
