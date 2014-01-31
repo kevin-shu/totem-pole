@@ -36,9 +36,9 @@
 	<div id="container" align="center">
 		<h1>TODO list</h1>
 		<div id="todo-container">
-			<div id="first-event" class="list" data-tp="id:id, mouseover:onmouseover, mouseout:onmouseout">
+			<div id="first-event" class="list" data-tp="id:id, mouseover:mouseover, mouseout:mouseout">
 				<span data-tp="event">123</span>
-				<div class="check-box" data-tp="check:click, isCheck"></div>
+				<div class="check-box" data-tp="isCheck"></div>
 			</div>
 		</div>
 		<div style="width:400px">
@@ -47,43 +47,43 @@
 		</div>
 		<hr>
 		<div id="ui-binding" style="width:400px">
-			You're creating :<span data-tp="content:text"></span>
+			You're creating :<span data-tp="text:content"></span>
 			<br>
-			<input data-tp="content:value"/>
+			<input data-tp="value:content"/>
 		</div>
 	</div>
 
 	<div id="template-bucket" style="display:none">
-		<div id="event-template" class="list"  data-tp="id:id, mouseover:onmouseover, mouseout:onmouseout">
+		<div id="event-template" class="list"  data-tp="id:id, mouseover:mouseover, mouseout:mouseout">
 			<span data-tp="event"></span>
-			<div class="check-box" data-tp="check:click, isCheck"></div>
+			<div class="check-box" data-tp="isCheck, click:check"></div>
 		</div>
 		<div id="issue-ticket">
-			<input data-tp="issue:value" />
+			<input data-tp="value:issue" />
 		</div>
 	</div>
 	<script>
 		document.getElementById("send-todo").onclick=function(){
 			var event = document.getElementById("input-todo").value;
-			var check = function(vm){
-				vm.set( "isCheck", vm.data.isCheck=="X" ? "":"X" );
-				if(vm.data.isCheck=="X"){
-					var r = confirm("Delete it now?");
-					if (r){
-						vm.kill();
-					}
-				}
-			};
-			var mouseover = function(){
-				this.style.background = "#efefef";
-			};
-			var mouseout = function(){
-				this.style.background = "white";
-			};
-			var todo = TP.template("#event-template",{event:event,check:check,mouseover:mouseover,mouseout:mouseout});
+			var todo = TP.template("#event-template",{event:event});
 			document.getElementById("todo-container").appendChild(todo.view);
 		};
 		TP("#ui-binding");
+		var check = function(vm){
+			vm.set( "isCheck", vm.data.isCheck=="X" ? "":"X" );
+			if(vm.data.isCheck=="X"){
+				var r = confirm("Delete it now?");
+				if (r){
+					vm.kill();
+				}
+			}
+		};
+		var mouseover = function(){
+			this.style.background = "#efefef";
+		};
+		var mouseout = function(){
+			this.style.background = "white";
+		};
 	</script>
 	<script>
 		var isTest = confirm("Start testing?");
