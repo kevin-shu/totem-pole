@@ -1,4 +1,6 @@
-//= require_tree .
+//= require tp.js
+//= require jquery.js
+//= require jq.stellar.js
 
 function add(vm) {
 	var content = vm.data["content"];
@@ -17,3 +19,6 @@ function check(vm) {
 };
 
 TP("#controller");
+
+$(".totem-left, .totem-right").height($("body").height());
+$(window).stellar({horizontalScrolling: false});

@@ -42,12 +42,16 @@
 /         li
 /           a href="https://wrapbootstrap.com/?ref=bsw" target="_blank"
 
+
+.totem-left data-stellar-ratio="0.2"
+.totem-right data-stellar-ratio="0.2"
+
 .container
   .brand-wrapper
     h1.brand Totem-Pole.js
-    h2 Fast, light, MVVM framework.
+    h2.slogan Fast, light, MVVM framework.
     a.btn.download-btn.btn-lg href="https://github.com/kevin-shu/totem-pole/zipball/master"
-      | Download (v 0.0.11)
+      | Download (v 0.1.0)
 
   hr.section-divider
 
@@ -59,9 +63,9 @@
       pre
         code
           | &lt;div id=&quot;person-template&quot;&gt;
-              &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">html</strong>:<strong style="color:blue">photo</strong>&quot;&gt;&lt;/div&gt;
-              Name: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">text</strong>:<strong style="color:blue">name</strong>, <strong style="color:green">style</strong>:<strong style="color:blue">name-color</strong>&quot;&gt;&lt;/div&gt;
-              Age: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:green">text</strong>:<strong style="color:blue">age</strong>&quot;&gt;&lt;/div&gt;
+              &lt;div <strong>data-tp</strong>=&quot;<strong style="color:#4FAC53">html</strong>:<strong style="color:#2F93FF">photo</strong>&quot;&gt;&lt;/div&gt;
+              Name: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:#4FAC53">text</strong>:<strong style="color:#2F93FF">name</strong>, <strong style="color:#4FAC53">style</strong>:<strong style="color:#2F93FF">name-color</strong>&quot;&gt;&lt;/div&gt;
+              Age: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:#4FAC53">text</strong>:<strong style="color:#2F93FF">age</strong>&quot;&gt;&lt;/div&gt;
             &lt;/div&gt;
       p
         | As you see, we can bind the view's "html", "text", and "style". And also "click", "mouseover"... you could watch the supported event 
@@ -124,9 +128,9 @@
 
           #controller
             .row
-              .col-md-9
+              .col-sm-9
                 input#input-todo.form-control.pull-right data-tp="value:content" placeholder="type something here..."
-              .col-md-3
+              .col-sm-3
                 button#send-todo.btn.pull-left data-tp="click:add" add
             br
             .row
@@ -186,3 +190,16 @@
                     &lt;div class=&quot;check-box&quot; data-tp=&quot;click:check, html:isCheck&quot;&gt;&lt;/div&gt;
                   &lt;/div&gt;
                 &lt;/div&gt;
+
+  hr.section-divider
+
+  .row
+    .col-md-3
+    .col-md-6
+      .author-wrapper
+        h2 Author
+        .hero-avatar.pull-left
+          img.hero-avatar-image src="http://www.gravatar.com/avatar/89d6afb4321c37bb7dd92bb4f9850232?s=160"
+        script src="//about.me/embed/kevin.shu?image=0&amp;headline=0&amp;style=site"
+        / iframe src="http://githubbadge.appspot.com/kevin-shu" style="border: 0;height: 142px;width: 200px;overflow: hidden;" frameBorder="0"
+    .col-md-3
