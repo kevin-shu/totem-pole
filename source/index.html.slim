@@ -81,7 +81,7 @@
       h3 And then the ViewModel
       pre
         code
-          | var person = new TP("person-template",{
+          | var person = new TP("#person-template",{
                                    name: "Kevin",
                                    name-color: {color:"blue"}
                                    age: 23,
@@ -92,7 +92,7 @@
         strong Sure we can set the data later:
       pre
         code
-          | var person = new TP("person-template");
+          | var person = new TP("#person-template");
             person.set({
                 name: "Kevin",
                 name-color: {color:"blue"}

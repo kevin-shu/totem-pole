@@ -2,12 +2,12 @@
   &lt;div <strong>data-tp</strong>=&quot;<strong style="color:#4FAC53">html</strong>:<strong style="color:#2F93FF">photo</strong>&quot;&gt;&lt;/div&gt;
   Name: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:#4FAC53">text</strong>:<strong style="color:#2F93FF">name</strong>, <strong style="color:#4FAC53">style</strong>:<strong style="color:#2F93FF">name-color</strong>&quot;&gt;&lt;/div&gt;
   Age: &lt;div <strong>data-tp</strong>=&quot;<strong style="color:#4FAC53">text</strong>:<strong style="color:#2F93FF">age</strong>&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;</code></pre><p>As you see, we can bind the view's "html", "text", and "style". And also "click", "mouseover"... you could watch the supported event <a href="https://github.com/kevin-shu/totem-pole/wiki/Events-binding">here</a>.</p><p><strong>Since the binding data is default as "text"</strong>, you can simply do this:</p><pre>strong data-tp="name"</pre><p>And Totem-Pole.js would set it as text-binding.</p><br /><h3>And then the ViewModel</h3><pre><code>var person = new TP("person-template",{
+&lt;/div&gt;</code></pre><p>As you see, we can bind the view's "html", "text", and "style". And also "click", "mouseover"... you could watch the supported event <a href="https://github.com/kevin-shu/totem-pole/wiki/Events-binding">here</a>.</p><p><strong>Since the binding data is default as "text"</strong>, you can simply do this:</p><pre>strong data-tp="name"</pre><p>And Totem-Pole.js would set it as text-binding.</p><br /><h3>And then the ViewModel</h3><pre><code>var person = new TP("#person-template",{
                        name: "Kevin",
                        name-color: {color:"blue"}
                        age: 23,
                        photo: "&lt;img src='/img/me.jpg' /&gt;"
-                   });</code></pre><br /><p><strong>Sure we can set the data later:</strong></p><pre><code>var person = new TP("person-template");
+                   });</code></pre><br /><p><strong>Sure we can set the data later:</strong></p><pre><code>var person = new TP("#person-template");
 person.set({
     name: "Kevin",
     name-color: {color:"blue"}
